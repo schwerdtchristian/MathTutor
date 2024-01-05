@@ -4,7 +4,30 @@ import plotly.graph_objects as go
 import numpy as np
 
 dash.register_page(__name__)
-layout = html.Div([html.H4('Sinus curve parameters visualization'), dcc.Graph(id="sin_curve_solution"), html.P(id = "sin_equation_solution"), html.Div([html.P("y"), html.Button("-", n_clicks=0, id='btn-decY'), html.Button("+", n_clicks=0, id='btn-incY')]), html.Div([html.P("Amplitude"), html.Button("-", n_clicks=0, id='btn-decAmp'), html.Button("+", n_clicks=0, id='btn-incAmp')]), html.Div([html.P("Frequency"), html.Button("- Freq", n_clicks=0, id='btn-decFreq'), html.Button("+ Freq", n_clicks=0, id='btn-incFreq')]), html.Div([html.P("Phase shift"), html.Button("-", n_clicks=0, id='btn-decPhase'), html.Button("+", n_clicks=0, id='btn-incPhase')]), html.Div([html.P("Function avarage"), html.Button("-", n_clicks=0, id='btn-decCenter'), html.Button("+", n_clicks=0, id='btn-incCenter')])])
+layout = html.Div([
+    html.H4('Sinus curve parameters visualization'),
+    dcc.Graph(id="sin_curve_solution"),
+    html.P(id = "sin_equation_solution"),
+    html.Div([
+        html.P("y"),
+        html.Button("-", n_clicks=0, id='btn-decY', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
+        html.Button("+", n_clicks=0, id='btn-incY', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]), 
+    html.Div([
+        html.P("Amplitude"),
+        html.Button("-", n_clicks=0, id='btn-decAmp', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
+        html.Button("+", n_clicks=0, id='btn-incAmp', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
+    html.Div([
+        html.P("Frequency"),
+        html.Button("- Freq", n_clicks=0, id='btn-decFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
+        html.Button("+ Freq", n_clicks=0, id='btn-incFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
+    html.Div([
+        html.P("Phase shift"),
+        html.Button("-", n_clicks=0, id='btn-decPhase', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
+        html.Button("+", n_clicks=0, id='btn-incPhase', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
+    html.Div([
+        html.P("Function avarage"),
+        html.Button("-", n_clicks=0, id='btn-decCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
+        html.Button("+", n_clicks=0, id='btn-incCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})])])
 
 
 @callback(Output("sin_curve_solution", "figure"), Input("btn-decY", "n_clicks"), Input("btn-incY", "n_clicks"), Input("btn-decPhase", "n_clicks"), Input("btn-incPhase", "n_clicks"), Input("btn-decAmp", "n_clicks"), Input("btn-incAmp", "n_clicks"), Input("btn-decFreq", "n_clicks"), Input("btn-incFreq", "n_clicks"), Input("btn-decCenter", "n_clicks"), Input("btn-incCenter", "n_clicks"))
@@ -42,9 +65,9 @@ def draw_sin_curve(n_decY, n_incY, n_decPhase, n_incPhase, n_decAmp, n_incAmp, n
 
     trace_data = [trace1, trace2, trace3]
     fig = go.Figure(data=trace_data)
-    fig["data"][0]["name"] = "sinus functions"
-    fig["data"][1]["name"] = f"x1 + n * 2 * pi / {n_freq}"
-    fig["data"][2]["name"] = f"pi - x1 + n * pi / {n_freq}"
+    fig["data"][0]["name"] = "sinus function"
+    fig["data"][1]["name"] = f"x + n * 2 * pi / {n_freq}"
+    fig["data"][2]["name"] = f"pi - x + n * pi / {n_freq}"
     fig.add_hline(y = y_const)
     fig.update_layout(showlegend=True)
     fig.update_yaxes(range=[n_center - 5, n_center + 5])

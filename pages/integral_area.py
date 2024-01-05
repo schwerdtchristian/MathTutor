@@ -5,7 +5,15 @@ import numpy as np
 
 #app = Dash(__name__)
 dash.register_page(__name__)
-layout = html.Div([html.H4('Primitive function as area function'), dcc.Graph(id="primitive_function"),dcc.Graph(id="derivative_function"), html.Button("Decrease area", n_clicks=0, id='btn-decArea'), html.Button("Same area", n_clicks=0, id='btn-sameArea'), html.Button("Increase area", n_clicks=0, id='btn-incArea'), html.P(id = "area_calculation_primitive_function"), dcc.Store(id = "prev_y_prim")])
+layout = html.Div([
+     html.H4('Primitive function as area function'), 
+     dcc.Graph(id="primitive_function"),
+     dcc.Graph(id="derivative_function"), 
+     html.Button("Decrease area", n_clicks=0, id='btn-decArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
+     html.Button("Same area", n_clicks=0, id='btn-sameArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
+     html.Button("Increase area", n_clicks=0, id='btn-incArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
+     html.P(id = "area_calculation_primitive_function"), 
+     dcc.Store(id = "prev_y_prim")])
 
 
 @callback(Output("primitive_function", "figure"), Output("prev_y_prim", "data"), Input("prev_y_prim", "data"), Input("btn-decArea", "n_clicks"), Input("btn-sameArea", "n_clicks"), Input("btn-incArea", "n_clicks"))
@@ -21,7 +29,7 @@ def draw_primitive_function(data, n_decArea, n_sameArea, n_incArea):
         x_axis_length = len(data) + 1
     fig = go.Figure(go.Scatter(
         x = x, y=y,
-    ), layout = {"title": "primitive function - area function"})
+    ), layout = {"title": "primitive function - area function", "title_x" : 0.5})
     fig.update_xaxes(range=[0, x_axis_length])
 
     return fig, y
@@ -48,7 +56,7 @@ def draw_derivative_function(data):
     fig = go.Figure(go.Scatter(
         x = x, y = y,
         fill = "tozeroy",
-    ), layout = {"title": "derivative function"})
+    ), layout = {"title": "derivative function", "title_x" : 0.5})
     fig.update_xaxes(range=[0, x_axis_length])
 
     return fig

@@ -4,7 +4,15 @@ import plotly.graph_objects as go
 import numpy as np
 
 dash.register_page(__name__)
-layout = html.Div([html.H4('Sinus curve vs. unit circle visualization'), dcc.Graph(id="sin_curve_unity"), dcc.Graph(id="unity_circle"), html.P(id = "sin_value"), html.Button("Decrease angle", n_clicks=0, id='btn-dec'), html.Button("Increase angle", n_clicks=0, id='btn-inc'),])
+layout = html.Div([
+    html.H4('Sinus curve vs. unit circle visualization'),
+    dcc.Graph(id="sin_curve_unity"),
+    dcc.Graph(id="unity_circle"),
+    html.P(id = "sin_value"),
+    html.P("Angle"),
+    html.Button("-", n_clicks=0, id='btn-dec', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
+    html.Button("+", n_clicks=0, id='btn-inc', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
+    ])
 
 
 @callback(Output("sin_curve_unity", "figure"), Input("btn-dec", "n_clicks"), Input("btn-inc", "n_clicks"))
@@ -25,7 +33,7 @@ def draw_sin_curve(n_left, n_right):
     )
     trace_data = [trace1, trace2]
     fig = go.Figure(data=trace_data)
-    fig.update_layout(showlegend=False)
+    fig.update_layout(showlegend=False, title =  "Sinus curve", title_x = 0.5)
 
     return fig
 
@@ -60,7 +68,7 @@ def draw_unity_circle(n_left, n_right):
     fig = go.Figure(data=trace_data)
     fig.update_xaxes(range=[-1.5, 1.5])
     fig.update_yaxes(range=[-1.5, 1.5])
-    fig.update_layout(autosize = False, width = 500, height = 500, showlegend=False)
+    fig.update_layout(autosize = False, width = 500, height = 500, showlegend=False, title =  "Unit circle", title_x = 0.5)
 
     return fig
 
