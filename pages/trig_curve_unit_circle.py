@@ -8,8 +8,11 @@ layout = html.Div([
     html.H4('Sinus curve vs. unit circle visualization'),
     dcc.Graph(id="sin_curve_unity"),
     dcc.Graph(id="unity_circle"),
-    html.P(id = "sin_value"),
-    html.P("Angle"),
+    html.Div([
+        html.P("sin(v): ", style = {"display" : "inline-block"}),
+        html.P(id = "sin_value", style = {"display" : "inline-block"}),
+    ]),
+    html.P("Angle (v)"),
     html.Button("-", n_clicks=0, id='btn-dec', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
     html.Button("+", n_clicks=0, id='btn-inc', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
     ])
@@ -33,7 +36,8 @@ def draw_sin_curve(n_left, n_right):
     )
     trace_data = [trace1, trace2]
     fig = go.Figure(data=trace_data)
-    fig.update_layout(showlegend=False, title =  "Sinus curve", title_x = 0.5)
+    fig.update_layout(showlegend=False, title =  "Sinus curve", title_x = 0.5, xaxis_title="angle (v)", yaxis_title="sin(v)")
+    fig.update_traces (marker_size = 12)
 
     return fig
 
