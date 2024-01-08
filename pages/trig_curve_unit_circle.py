@@ -12,6 +12,7 @@ layout = html.Div([
     html.P("Angle (v)"),
     html.Button("-", n_clicks=0, id='btn-dec', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
     html.Button("+", n_clicks=0, id='btn-inc', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
+    html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
     ])
 
 

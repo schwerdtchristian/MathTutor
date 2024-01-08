@@ -28,7 +28,9 @@ layout = html.Div([
     html.Div([
         html.P("Function avarage"),
         html.Button("-", n_clicks=0, id='btn-decCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
-        html.Button("+", n_clicks=0, id='btn-incCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})])])
+        html.Button("+", n_clicks=0, id='btn-incCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
+    html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
+        ])
 
 
 @callback(Output("sin_curve_solution", "figure"), Input("btn-decY", "n_clicks"), Input("btn-incY", "n_clicks"), Input("btn-decPhase", "n_clicks"), Input("btn-incPhase", "n_clicks"), Input("btn-decAmp", "n_clicks"), Input("btn-incAmp", "n_clicks"), Input("btn-decFreq", "n_clicks"), Input("btn-incFreq", "n_clicks"), Input("btn-decCenter", "n_clicks"), Input("btn-incCenter", "n_clicks"))

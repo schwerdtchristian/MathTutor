@@ -28,7 +28,9 @@ layout = html.Div([
         html.Button("-", n_clicks=0, id='btn-decCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
         html.Button("+", n_clicks=0, id='btn-incCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
     dcc.Graph(id="sin_curve_2"),
-    html.B(id = "sin_equation_2", style={"font-size": "30px"})])
+    html.B(id = "sin_equation_2", style={"font-size": "30px"}),
+    html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
+    ])
 
 
 @callback(Output("sin_curve", "figure"), Input("btn-decPhase", "n_clicks"), Input("btn-incPhase", "n_clicks"), Input("btn-decAmp", "n_clicks"), Input("btn-incAmp", "n_clicks"), Input("btn-decFreq", "n_clicks"), Input("btn-incFreq", "n_clicks"), Input("btn-decCenter", "n_clicks"), Input("btn-incCenter", "n_clicks"))

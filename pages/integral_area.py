@@ -14,7 +14,9 @@ layout = html.Div([
      html.Button("Same area", n_clicks=0, id='btn-sameArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
      html.Button("Increase area", n_clicks=0, id='btn-incArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
      html.P(id = "area_calculation_primitive_function"), 
-     dcc.Store(id = "prev_y_prim")])
+     dcc.Store(id = "prev_y_prim"),
+     html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
+     ])
 
 
 @callback(Output("primitive_function", "figure"), Output("prev_y_prim", "data"), Input("prev_y_prim", "data"), Input("btn-decArea", "n_clicks"), Input("btn-sameArea", "n_clicks"), Input("btn-incArea", "n_clicks"))
