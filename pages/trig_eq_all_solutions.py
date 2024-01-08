@@ -5,9 +5,10 @@ import numpy as np
 
 dash.register_page(__name__)
 layout = html.Div([
-    html.H4('Sinus curve parameters visualization'),
+    html.H4('Sinus equational solutions', style={"font-size": "30px", "text-align": "center"}),
+    html.P("Explore how all solutions to a sinus equation can be visualized be finding all the intersections between the horizontal line and the sinus function graph", style={"text-align": "center"}),
     dcc.Graph(id="sin_curve_solution"),
-    html.P(id = "sin_equation_solution"),
+    html.B(id = "sin_equation_solution", style={"font-size": "30px"}),
     html.Div([
         html.P("y"),
         html.Button("-", n_clicks=0, id='btn-decY', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),

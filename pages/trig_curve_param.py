@@ -6,18 +6,19 @@ import numpy as np
 dash.register_page(__name__)
 
 layout = html.Div([
-    html.H4('Sinus function parameters visualization'),
+    html.H4('Sinus function parameters visualization', style={"font-size": "30px", "text-align": "center"}),
+    html.P("Explore how the sinus function graph changes when its parameters changes. The bottom plot and equation shows the connection between the period and phase shift seen in the plot and an alterative way of writing the sinus equation formula", style={"text-align": "center"}),
     dcc.Graph(id="sin_curve"),
     html.P(id = "sin_parameters"),
-    html.P(id = "sin_equation"),
+    html.B(id = "sin_equation", style={"font-size": "30px"}),
     html.Div([
         html.P("Amplitude"),
         html.Button("-", n_clicks=0, id='btn-decAmp', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
         html.Button("+", n_clicks=0, id='btn-incAmp', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
     html.Div([
         html.P("Frequency"),
-        html.Button("- Freq", n_clicks=0, id='btn-decFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
-        html.Button("+ Freq", n_clicks=0, id='btn-incFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
+        html.Button("-", n_clicks=0, id='btn-decFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
+        html.Button("+", n_clicks=0, id='btn-incFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
     html.Div([
         html.P("Phase shift"),
         html.Button("-", n_clicks=0, id='btn-decPhase', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
@@ -27,7 +28,7 @@ layout = html.Div([
         html.Button("-", n_clicks=0, id='btn-decCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
         html.Button("+", n_clicks=0, id='btn-incCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
     dcc.Graph(id="sin_curve_2"),
-    html.P(id = "sin_equation_2")])
+    html.B(id = "sin_equation_2", style={"font-size": "30px"})])
 
 
 @callback(Output("sin_curve", "figure"), Input("btn-decPhase", "n_clicks"), Input("btn-incPhase", "n_clicks"), Input("btn-decAmp", "n_clicks"), Input("btn-incAmp", "n_clicks"), Input("btn-decFreq", "n_clicks"), Input("btn-incFreq", "n_clicks"), Input("btn-decCenter", "n_clicks"), Input("btn-incCenter", "n_clicks"))

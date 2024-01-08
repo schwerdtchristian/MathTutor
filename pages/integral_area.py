@@ -6,7 +6,8 @@ import numpy as np
 #app = Dash(__name__)
 dash.register_page(__name__)
 layout = html.Div([
-     html.H4('Primitive function as area function'), 
+     html.H4('Primitive function as area function', style={"font-size": "30px", "text-align": "center"}), 
+     html.P("Explore how the primitive function can be intepreted as the area of its derivative function. By clicking on the button to add area the primitive function is increasing its value while the area under the curve for the derivative function increases and vice versa when the button for decreasing the area is clicked. Ecpecially note that to keep the area constant means that the primitive function needs to horizontal, meaning that its derivative is zero hence its derivative function graph is zero", style={"text-align": "center"}),
      dcc.Graph(id="primitive_function"),
      dcc.Graph(id="derivative_function"), 
      html.Button("Decrease area", n_clicks=0, id='btn-decArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 

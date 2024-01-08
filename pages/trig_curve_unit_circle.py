@@ -5,7 +5,8 @@ import numpy as np
 
 dash.register_page(__name__)
 layout = html.Div([
-    html.H4('Sinus curve vs. unit circle visualization'),
+    html.H4('Sinus curve vs. unit circle visualization', style={"font-size": "30px", "text-align": "center"}),
+    html.P("Explore how the graph of the sinus function is connected with the unit circle by changing the angle (v) measured in radians. Explore how the y value on the y axis is alternating between -1 and 1 in both the sinus function graph and unity circle when increasing the angle (v)", style={"text-align": "center"}),
     dcc.Graph(id="sin_curve_unity"),
     dcc.Graph(id="unity_circle"),
     html.P("Angle (v)"),
@@ -51,7 +52,7 @@ def draw_sin_curve(n_left, n_right):
 
     trace_data = [point, y_level, x_level, sin_curve]
     fig = go.Figure(data=trace_data)
-    fig.update_layout(showlegend=False, title =  "Sinus curve", title_x = 0.5, xaxis_title="angle (v)", yaxis_title="sin(v)")
+    fig.update_layout(showlegend=False, title =  "Sinus function graph", title_x = 0.5, xaxis_title="angle (v)", yaxis_title="sin(v)")
     fig.update_traces (marker_size = 12)
 
     return fig
