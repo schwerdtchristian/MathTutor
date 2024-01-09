@@ -14,8 +14,8 @@ layout = html.Div([
     html.P(id = "area_calculations"),
     html.B("Area = b * h / 2"),
     html.Div([
-        html.Button("Move left", n_clicks=0, id='btn-left', style={'font-size': '18px', 'width': '140px', 'height':'50px', 'margin-top': '20px'}),
-        html.Button("Move right", n_clicks=0, id='btn-right', style={'font-size': '18px', 'width': '140px', 'height':'50px'})]),
+        html.Button("Move A left", n_clicks=0, id='btn-left', style={'font-size': '18px', 'width': '140px', 'height':'50px', 'margin-top': '20px'}),
+        html.Button("Move A right", n_clicks=0, id='btn-right', style={'font-size': '18px', 'width': '140px', 'height':'50px'})]),
     html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
     ])
 
