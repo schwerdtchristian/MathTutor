@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 dash.register_page(module = __name__, name = "Triangle area")
 layout = html.Div([
     html.H4('Triangle area formula', style={"font-size": "30px", "text-align": "center"}),
-    html.P("Explore the triangle area formula and see why the area formula stays the same regardless of the shape of the triangle. The triangle area is calculated by creating two sub traingles which areas are added or subtracted depending on the shape of the original triangle, but the traingle area formula stays the same.", style={"text-align": "center"}),
+    html.P("Explore the triangle area formula and see why the area formula stays the same regardless of the shape of the triangle. The triangle area is calculated by creating two sub triangles which areas are added or subtracted depending on the shape of the original triangle, but the traingle area formula stays the same.", style={"text-align": "center"}),
     dcc.Graph(id="triangle"),
     html.Div(children = [
         dcc.Graph(id="sub_triangle1", style = {"display" : "inline-block"}),
@@ -25,7 +25,9 @@ def draw_triangle(n_left, n_right):
     fig = go.Figure(go.Scatter(
         x = [1+n, 0, 2, 1+n, 1+n, 1+n], y=[2, 0, 0, 2, 0, 2],
         fill = "toself",
-        mode = "lines",
+        mode = "lines + text",
+        text = ["A", "B", "D", "A", "C"],
+        textfont = {"size":20},
     ), layout = {"title": "Triangle", "title_x" : 0.5})
     fig.update_xaxes(range=[min(n - 1, -1), max(n + 2, 3)], visible = False)
     fig.update_yaxes(visible = False)
@@ -46,7 +48,9 @@ def draw_sub_triangle1(n_left, n_right):
     fig = go.Figure(go.Scatter(
         x = [1+n, 0, 1+n, 1+n], y=[2, 0, 0, 2],
         fill = "toself",
-        mode = "lines",
+        mode = "lines + text",
+        text = ["A", "B", "C"],
+        textfont = {"size":20},
     ), layout = {"title": "Triangle 1", "title_x" : 0.5})
     fig.update_xaxes(range=[min(n - 1, -1), max(n + 2, 2)], visible = False)
     fig.update_yaxes(visible = False)
@@ -67,7 +71,9 @@ def draw_sub_triangle2(n_left, n_right):
     fig = go.Figure(go.Scatter(
         x = [1+n, 1+n, 2, 1+n], y=[2, 0, 0, 2],
         fill = "toself",
-        mode = "lines",
+        mode = "lines + text",
+        text = ["A", "C", "D"],
+        textfont = {"size":20},
     ), layout = {"title": "Triangle 2", "title_x" : 0.5})
     fig.update_xaxes(range=[min(n - 1, -1), max(n + 2, 3)], visible = False)
     fig.update_yaxes(visible = False)
