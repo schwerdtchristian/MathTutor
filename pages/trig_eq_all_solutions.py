@@ -3,7 +3,8 @@ from dash import dcc, html, Input, Output, callback
 import plotly.graph_objects as go
 import numpy as np
 
-dash.register_page(__name__)
+dash.register_page(module = __name__, name = "Sinus equations")
+
 layout = html.Div([
     html.H4('Sinus equational solutions', style={"font-size": "30px", "text-align": "center"}),
     html.P("Explore how all solutions to a sinus equation can be visualized be finding all the intersections between the horizontal line and the sinus function graph", style={"text-align": "center"}),

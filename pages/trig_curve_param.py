@@ -3,7 +3,7 @@ from dash import dcc, html, Input, Output, callback
 import plotly.graph_objects as go
 import numpy as np
 
-dash.register_page(__name__)
+dash.register_page(module = __name__, name = "Sinus function parameters")
 
 layout = html.Div([
     html.H4('Sinus function parameters visualization', style={"font-size": "30px", "text-align": "center"}),

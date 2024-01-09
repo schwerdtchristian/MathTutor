@@ -8,7 +8,7 @@ app.layout = html.Div([
     html.H1('Math tutor app'),
     html.Div([
         html.Div(
-            dcc.Link(f"{page['name']} - {page['path']}", href=page["relative_path"])
+            dcc.Link(f"{page['name']}", href=page["relative_path"])
         ) for page in dash.page_registry.values()
     ]),
     dash.page_container

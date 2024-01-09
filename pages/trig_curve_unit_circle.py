@@ -3,7 +3,8 @@ from dash import dcc, html, Input, Output, callback
 import plotly.graph_objects as go
 import numpy as np
 
-dash.register_page(__name__)
+dash.register_page(module = __name__, name = "Connection between sinus function graph and unit circle")
+
 layout = html.Div([
     html.H4('Sinus curve vs. unit circle visualization', style={"font-size": "30px", "text-align": "center"}),
     html.P("Explore how the graph of the sinus function is connected with the unit circle by changing the angle (v) measured in radians. Explore how the y value on the y axis is alternating between -1 and 1 in both the sinus function graph and unity circle when increasing the angle (v)", style={"text-align": "center"}),

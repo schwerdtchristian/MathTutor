@@ -1,10 +1,8 @@
 import dash
 from dash import dcc, html, Input, Output, callback
 import plotly.graph_objects as go
-import math
 
-#app = Dash(__name__)
-dash.register_page(__name__)
+dash.register_page(module = __name__, name = "Triangle area")
 layout = html.Div([
     html.H4('Triangle area formula', style={"font-size": "30px", "text-align": "center"}),
     html.P("Explore the triangle area formula and see why the area formula stays the same regardless of the shape of the triangle. The triangle area is calculated by creating two sub traingles which areas are added or subtracted depending on the shape of the original triangle, but the traingle area formula stays the same.", style={"text-align": "center"}),
