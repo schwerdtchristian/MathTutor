@@ -39,7 +39,7 @@ def draw_sin_curve(n_decPhase, n_incPhase, n_decAmp, n_incAmp, n_decFreq, n_incF
     n_amp = 1 + (n_incAmp - n_decAmp)
     n_freq = 1 + (n_incFreq - n_decFreq)
     n_center = (n_incCenter - n_decCenter)
-    x = np.linspace(-2*np.pi, 2*np.pi, 100)
+    x = np.linspace(-2*np.pi, 2*np.pi, 1000)
     y = n_amp * np.sin(n_freq*x + n_phase) + n_center
 
     trace1 = go.Scatter(
@@ -51,7 +51,7 @@ def draw_sin_curve(n_decPhase, n_incPhase, n_decAmp, n_incAmp, n_decFreq, n_incF
     trace_data = [trace1]
     fig = go.Figure(data=trace_data)
     fig.update_layout(showlegend=False)
-    fig.update_yaxes(range=[n_center - 5, n_center + 5])
+    fig.update_yaxes(range=[n_center - abs(n_amp) - 1, n_center + abs(n_amp) + 1])
 
     return fig
 
@@ -61,7 +61,7 @@ def draw_sin_curve(n_decPhase, n_incPhase, n_decAmp, n_incAmp, n_decFreq, n_incF
     n_amp = 1 + (n_incAmp - n_decAmp)
     n_freq = 1 + (n_incFreq - n_decFreq)
     n_center = (n_incCenter - n_decCenter)
-    x = np.linspace(- 2*np.pi/n_freq, 2*np.pi/n_freq, 100)
+    x = np.linspace(- 2*np.pi/n_freq, 2*np.pi/n_freq, 1000)
     y = n_amp * np.sin(n_freq*x + n_phase) + n_center
     B = 1 + (n_incFreq - n_decFreq)
     C = 0.1 * (n_incPhase - n_decPhase) / B
@@ -88,7 +88,7 @@ def draw_sin_curve(n_decPhase, n_incPhase, n_decAmp, n_incAmp, n_decFreq, n_incF
     fig["data"][1]["name"] = "C = phase shift"
     fig["data"][2]["name"] = "B * T = 2*pi => B = 2*pi / T, where T is the period"
     fig.update_layout(showlegend=True)
-    fig.update_yaxes(range=[n_center - 5, n_center + 5])
+    fig.update_yaxes(range=[n_center - abs(n_amp) - 1, n_center + abs(n_amp) + 1])
 
     return fig
 

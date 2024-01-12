@@ -20,8 +20,8 @@ layout = html.Div([
         html.Button("+", n_clicks=0, id='btn-incAmp', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
     html.Div([
         html.P("Frequency"),
-        html.Button("- Freq", n_clicks=0, id='btn-decFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
-        html.Button("+ Freq", n_clicks=0, id='btn-incFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
+        html.Button("-", n_clicks=0, id='btn-decFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
+        html.Button("+", n_clicks=0, id='btn-incFreq', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
     html.Div([
         html.P("Phase shift"),
         html.Button("-", n_clicks=0, id='btn-decPhase', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
@@ -40,7 +40,7 @@ def draw_sin_curve(n_decY, n_incY, n_decPhase, n_incPhase, n_decAmp, n_incAmp, n
     n_amp = 1 + (n_incAmp - n_decAmp)
     n_freq = 1 + (n_incFreq - n_decFreq)
     n_center = (n_incCenter - n_decCenter)
-    x = np.linspace(- 2*2*np.pi, 2*2*np.pi, 100)
+    x = np.linspace(- 2*2*np.pi, 2*2*np.pi, 1000)
     y = n_amp * np.sin(n_freq*x + n_phase) + n_center
     y_const = n_incY - n_decY
     B = 1 + (n_incFreq - n_decFreq)
@@ -74,7 +74,7 @@ def draw_sin_curve(n_decY, n_incY, n_decPhase, n_incPhase, n_decAmp, n_incAmp, n
     fig["data"][2]["name"] = f"pi - x + n * pi / {n_freq}"
     fig.add_hline(y = y_const)
     fig.update_layout(showlegend=True)
-    fig.update_yaxes(range=[n_center - 5, n_center + 5])
+    fig.update_yaxes(range=[n_center - abs(n_amp) - 1, n_center + abs(n_amp) + 1])
     fig.update_xaxes(range=[- 2*2*np.pi, 2*2*np.pi])
 
     return fig
