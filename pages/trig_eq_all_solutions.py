@@ -67,15 +67,26 @@ def draw_sin_curve(n_decY, n_incY, n_decPhase, n_incPhase, n_decAmp, n_incAmp, n
         y=y3,
     )
 
-    trace_data = [trace1, trace2, trace3]
+    trace4 = go.Scatter(
+        x = [x_solution, x_solution],
+        y = [0, n_amp * np.sin(n_freq*x_solution + n_phase) + n_center],
+        line = {"dash":"dash"},
+        mode = "lines + text",
+        text = [f"x = {np.round(x_solution, 2)}"],
+        textposition = "bottom right"
+    )
+
+    trace_data = [trace1, trace2, trace3, trace4]
     fig = go.Figure(data=trace_data)
     fig["data"][0]["name"] = "sinus function"
     fig["data"][1]["name"] = f"x + n * 2 * pi / {n_freq}"
     fig["data"][2]["name"] = f"pi - x + n * pi / {n_freq}"
+    fig["data"][3]["name"] = "found solution"
     fig.add_hline(y = y_const)
     fig.update_layout(showlegend=True)
     fig.update_yaxes(range=[n_center - abs(n_amp) - 1, n_center + abs(n_amp) + 1])
     fig.update_xaxes(range=[- 2*2*np.pi, 2*2*np.pi])
+    fig.update_traces (marker_size = 12)
 
     return fig
 
@@ -87,4 +98,4 @@ def sin_equation_solution(n_decY, n_incY, n_decPhase, n_incPhase, n_decAmp, n_in
     n_center = (n_incCenter - n_decCenter)
     y_const = n_incY - n_decY
     x_solution = (np.arcsin((y_const - n_center)/n_amp) - n_phase) / n_freq
-    return f"y = {n_amp} * sin({n_freq} * x + {n_phase}) + {n_center} = {y_const} =======> x = {x_solution}"
+    return f"y = {n_amp} * sin({n_freq} * x + {n_phase}) + {n_center} = {y_const} =======> x = {np.round(x_solution, 2)}"
