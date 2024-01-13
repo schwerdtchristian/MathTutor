@@ -1,7 +1,6 @@
 import dash
 from dash import dcc, html, Input, Output, callback
 import plotly.graph_objects as go
-import numpy as np
 
 dash.register_page(module = __name__, name = "Percent")
 
@@ -19,7 +18,7 @@ layout = html.Div([
         html.Button("-", n_clicks=0, id='btn-decStart', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
         html.Button("+", n_clicks=0, id='btn-incStart', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]), 
     html.Div([
-        html.P("Percent"),
+        html.P("Percent change"),
         html.Button("-", n_clicks=0, id='btn-decPercent', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'}),
         html.Button("+", n_clicks=0, id='btn-incPercent', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]), 
     html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
