@@ -84,4 +84,4 @@ def end_amount(n_decStart, n_incStart, n_decPercent, n_incPercent):
 def change_amount(n_decStart, n_incStart, n_decPercent, n_incPercent):
     n_start = 100 + (n_incStart - n_decStart)
     n_percent = 0 + (n_incPercent - n_decPercent)
-    return f"Change amount: start amount / 100 * how many percent = {n_start} / 100 * {n_percent} = {n_start / 100 * n_percent}"
+    return f"Change amount: start amount / 100 * percent changes = {n_start} / 100 * {n_percent} = {n_start / 100 * n_percent}"
