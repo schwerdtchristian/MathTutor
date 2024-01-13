@@ -29,6 +29,8 @@ layout = html.Div([
         html.Button("+", n_clicks=0, id='btn-incCenter', style={'font-size': '18px', 'width': '140px', 'height':'30px', 'margin-bottom': '20px'})]),
     dcc.Graph(id="sin_curve_2"),
     html.B(id = "sin_equation_2", style={"font-size": "30px"}),
+    html.P("C = phase shift", style={"font-size": "30px"}),
+    html.P("B * T = 2*pi => B = 2*pi / T", style={"font-size": "30px"}),
     html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
     ])
 
@@ -85,8 +87,8 @@ def draw_sin_curve(n_decPhase, n_incPhase, n_decAmp, n_incAmp, n_decFreq, n_incF
     trace_data = [trace1, trace2, trace3]
     fig = go.Figure(data=trace_data)
     fig["data"][0]["name"] = "sinus function"
-    fig["data"][1]["name"] = "C = phase shift"
-    fig["data"][2]["name"] = "B * T = 2*pi => B = 2*pi / T, where T is the period"
+    fig["data"][1]["name"] = "phase shift"
+    fig["data"][2]["name"] = "Period (T)"
     fig.update_layout(showlegend=True)
     fig.update_yaxes(range=[n_center - abs(n_amp) - 1, n_center + abs(n_amp) + 1])
 
