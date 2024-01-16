@@ -6,7 +6,7 @@ dash.register_page(module = __name__, name = "Percent")
 
 layout = html.Div([
     html.H4('Percent', style={"font-size": "30px", "text-align": "center"}),
-    html.P("Percent means one part in hundred of something. One percent of something is if you divide that thing in hundred equals parts and take one of those parts. Similarly 5 percent of something is that you divide that thing in hundred equal parts and take five of those parts. Usually questions about procetn can be written as: start amount + percent change = new amount. Lets explore how it looks visually", style={"text-align": "center"}),
+    html.P("Percent means one part in hundred of something. One percent of something is if you divide that thing in hundred equal parts and take one of those parts. Similarly 5 percent of something is that you divide that thing in hundred equal parts and take five of those parts. Lets explore how it looks visually. Try for example to increase a start value with 10% and then decrease the new value (by using the new value as the start value) with 10%. Will the final end value be the same as the start value you started with?", style={"text-align": "center"}),
     html.B("Known start amount and percent change", style={"font-size": "30px"}),
     html.P(id = "start amount numerical", style={"font-size": "30px"}),
     html.P(id = "percent change", style={"font-size": "30px"}),
