@@ -43,7 +43,7 @@ def draw_unity_circle(n_left, n_right):
         y = [y, y],
         line = {"dash":"dash"},
         mode = "lines + text",
-        text = [f"sin(v) = {np.round(np.sin(n), 2)}"],
+        text = [f"sin(v1) = sin(v2) = {np.round(np.sin(n), 2)}"],
         textposition = "top right" 
     )
 
@@ -52,7 +52,7 @@ def draw_unity_circle(n_left, n_right):
         y = [-y, y],
         line = {"dash":"dash"},
         mode = "lines + text",
-        text = [f"cos(v) = {np.round(np.cos(n), 2)}"],
+        text = [f"cos(v1) = cos(v3) = {np.round(np.cos(n), 2)}"],
         textposition = "top right" 
     )
 
@@ -65,19 +65,19 @@ def draw_unity_circle(n_left, n_right):
     line_color="LightSeaGreen",
     )
 
-    fig.update_xaxes(range=[-1.5, 1.5])
-    fig.update_yaxes(range=[-1.5, 1.5])
-    fig.update_layout(autosize = False, width = 500, height = 500, showlegend=False, title =  "Unit circle", title_x = 0.5)
+    fig.update_xaxes(range=[-1.7, 1.7])
+    fig.update_yaxes(range=[-1.7, 1.7])
+    fig.update_layout(autosize = False, width = 1000, height = 1000, showlegend=False, title =  "Unit circle", title_x = 0.5)
     fig.add_annotation(x = x/3, y = y/3,
-                       text = f"v = {np.round(n, 2)}",
+                       text = f"v1 = {np.round(n, 2)}",
                        showarrow = False,
                        yshift = 0)
     fig.add_annotation(x = -x/3, y = y/3,
-                       text = f"v = {np.round(np.pi - n, 2)}",
+                       text = f"v2 = {np.round(np.pi - n, 2)}",
                        showarrow = False,
                        yshift = 0)
     fig.add_annotation(x = x/3, y = -y/3,
-                       text = f"v = {np.round(-n, 2)}",
+                       text = f"v3 = {np.round(-n, 2)}",
                        showarrow = False,
                        yshift = 0)
 
