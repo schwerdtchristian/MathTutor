@@ -5,7 +5,17 @@ app = Dash(__name__, use_pages=True)
 server = app.server
 
 app.layout = html.Div([
-    html.H1("Math tutor app"),
+    html.Div([
+        html.Img(src="/assets/Math_tutor_app.png", style={'width':'300px'}),
+    ], 
+    style={
+            'display': 'flex',              # flexbox for this container only
+            'align-items': 'center',        # vertical alignment
+            'justify-content': 'center',    # horizontal alignment
+            'margin': '40px 0'              # optional spacing above/below this section
+    }
+    ),
+    
 
     # Search input
     dcc.Input(
