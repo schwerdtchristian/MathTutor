@@ -5,32 +5,60 @@ app = Dash(__name__, use_pages=True)
 server = app.server
 
 app.layout = html.Div([
+
+    # ---------- Search box ----------
+    html.Div(
+        dcc.Input(
+            id="search-pages",
+            type="text",
+            placeholder="Search pages...",
+            style={"width": "300px", "marginBottom": "20px"}
+        ),
+        style={"textAlign": "left", "margin": "20px"}
+    ),
+
+    # ---------- LINKS + IMAGE SIDE BY SIDE ----------
     html.Div([
-        html.Img(src="/assets/Math_tutor_app.png", style={'width':'300px'}),
-    ], 
+
+        # --- Left: page links ---
+        html.Div(
+            id="page-links-container",
+            style={
+                "width": "300px",
+                "marginRight": "40px"
+            }
+        ),
+
+        # --- Left: image ---
+        html.Div([
+            html.Img(
+                src="/assets/Math_tutor_app_3.png",
+                style={'width': '500px'}
+            )
+        ]),
+        # --- Right: image ---
+        html.Div([
+            html.Img(
+                src="/assets/Math_tutor_app_3_flipped.png",
+                style={'width': '500px'}
+            )
+        ]),
+    ],
     style={
-            'display': 'flex',              # flexbox for this container only
-            'align-items': 'center',        # vertical alignment
-            'justify-content': 'center',    # horizontal alignment
-            'margin': '40px 0'              # optional spacing above/below this section
-    }
-    ),
-    
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "flex-start",
+        "justifyContent": "flex-start",
+        "margin": "20px"
+    }),
 
-    # Search input
-    dcc.Input(
-        id="search-pages",
-        type="text",
-        placeholder="Search pages...",
-        style={"width": "300px", "marginBottom": "20px"}
-    ),
-
-    # Container for page links
-    html.Div(id="page-links-container"),
-
-    # Page content
-    dash.page_container
+    # ---------- Page content below ----------
+    html.Div(
+        dash.page_container,
+        style={"marginTop": "40px"}
+    )
 ])
+
 
 @app.callback(
     Output("page-links-container", "children"),
@@ -43,8 +71,12 @@ def filter_pages(search_value):
     for page in dash.page_registry.values():
         if search_value in page["name"].lower():
             links.append(
-                html.Div(dcc.Link(page["name"], href=page["path"]), style={"marginBottom": "5px"})
+                html.Div(
+                    dcc.Link(page["name"], href=page["path"]),
+                    style={"marginBottom": "8px"}
+                )
             )
+
     return links
 
 
