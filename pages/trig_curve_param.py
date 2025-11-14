@@ -6,7 +6,7 @@ import numpy as np
 dash.register_page(module = __name__, name = "Sinus function parameters")
 
 layout = html.Div([
-    html.H4('Sinus function parameters visualization', style={"font-size": "30px", "text-align": "center"}),
+    html.H4('Sinus function parameters', style={"font-size": "30px", "text-align": "center"}),
     html.P("Explore how the sinus function graph changes when its parameters changes. The bottom plot and equation shows the connection between the period and phase shift seen in the plot and an alterative way of writing the sinus equation formula", style={"text-align": "center"}),
     dcc.Graph(id="sin_curve"),
     html.P(id = "sin_parameters"),

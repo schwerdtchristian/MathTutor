@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 dash.register_page(module=__name__, name="Percent, promille, PPM Conversion")
 
 layout = html.Div([
-    html.H1("Unit Conversion and Fill Visualization", style={'textAlign': 'center'}),
+    html.H4('Percent, promille and PPM Conversion', style={"font-size": "30px", "text-align": "center"}),
 
     html.Div([
         html.Div([

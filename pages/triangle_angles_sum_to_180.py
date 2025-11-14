@@ -215,6 +215,8 @@ def make_triangle_figure(pts, outer_A, outer_B, outer_C):
 # ---------- Dash UI ----------
 
 layout = html.Div([
+    html.H4('Triangle angels sum to 180', style={"font-size": "30px", "text-align": "center"}),
+
     html.Div([
         html.Label("Angle a (°):"),
         dcc.Slider(id="angle-a",min=20,max=130,step=1,value=60,

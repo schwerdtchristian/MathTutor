@@ -9,7 +9,9 @@ dash.register_page(
 layout = html.Div(
     style={"padding": "20px", "position": "relative"},
     children=[
-
+        # --- Added title ---
+        html.H4('Multiplication - commutative operation', style={"font-size": "30px", "text-align": "center"}),
+        
         # Top input row
         html.Div(
             style={
@@ -25,6 +27,7 @@ layout = html.Div(
                     min=1,
                     step=1,
                     placeholder="Rows",
+                    value = 2,
                     style={"width": "80px"}
                 ),
                 html.Div("x"),
@@ -34,6 +37,7 @@ layout = html.Div(
                     min=1,
                     step=1,
                     placeholder="Columns",
+                    value = 3,
                     style={"width": "80px"}
                 ),
             ],
