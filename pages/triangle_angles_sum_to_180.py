@@ -170,45 +170,145 @@ def make_triangle_figure(pts, outer_A, outer_B, outer_C):
         height=600
     )
 
-    # Dynamic circle in center
+               # --- Dynamic circle with geometry-computed rotation (Option B) ---
     outer_angles = {"A": outer_A, "B": outer_B, "C": outer_C}
     center_x, center_y = circle_center_x, np.mean(y)
-    radius = 0.3
-    total_angle = 0
-    for label in ["A","B","C"]:
+    radius = 0.33
+
+    # --- Get triangle vertex positions (already shifted) ---
+    vertex_labels = ["A", "B", "C"]
+    vertices = [np.array([x[i], y[i]]) for i in range(3)]
+    prev_pts  = [np.array([x[(i-1)%3], y[(i-1)%3]]) for i in range(3)]
+    next_pts  = [np.array([x[(i+1)%3], y[(i+1)%3]]) for i in range(3)]
+
+    # --- Compute OUTER bisector directions (absolute angles, radians) ---
+    outer_dirs = {}
+    for i, label in enumerate(vertex_labels):
+        V = vertices[i]
+        P = prev_pts[i]
+        N = next_pts[i]
+
+        v1 = P - V
+        v2 = N - V
+        v1_u = v1 / np.linalg.norm(v1)
+        v2_u = v2 / np.linalg.norm(v2)
+
+        # Outer bisector used in your diagram: reverse v1 then bisect
+        outer_bis = -v1_u + v2_u
+        outer_bis /= np.linalg.norm(outer_bis)
+        outer_dirs[label] = np.arctan2(outer_bis[1], outer_bis[0])
+
+    # --- Compute the rotation (in radians) that best aligns circle-sector midpoints
+    #     with the outer_dirs. Use circular mean of per-sector required rotations. ---
+    required_rots = []
+    running_angle_deg = 0.0
+    for label in ["A", "B", "C"]:
+        span = outer_angles[label]  # degrees
+        mid_deg = running_angle_deg + span / 2.0
+        mid_rad = np.radians(mid_deg)  # where the sector midpoint sits if rotation = 0
+        desired = outer_dirs[label]    # absolute direction we want the midpoint to point to
+        # rotation required for this label:
+        required_rots.append(desired - mid_rad)
+        running_angle_deg += span
+
+    # Circular average of required_rots:
+    rc = np.mean(np.cos(required_rots))
+    rs = np.mean(np.sin(required_rots))
+    rot = np.arctan2(rs, rc)  # final rotation (radians) to apply (positive = CCW)
+
+    # --- Draw sectors using computed rot ---
+    running_angle_deg = 0.0
+    for label in ["A", "B", "C"]:
         span = outer_angles[label]
-        theta = np.linspace(np.radians(total_angle),
-                            np.radians(total_angle+span), 60)
+        start = np.radians(running_angle_deg) + rot
+        end   = np.radians(running_angle_deg + span) + rot
+        theta = np.linspace(start, end, 120)
+
+        # Filled wedge
+        wedge_x = [center_x] + list(center_x + radius * np.cos(theta)) + [center_x]
+        wedge_y = [center_y] + list(center_y + radius * np.sin(theta)) + [center_y]
         fig.add_trace(go.Scatter(
-            x=center_x+radius*np.cos(theta),
-            y=center_y+radius*np.sin(theta),
-            mode="lines",
-            line=dict(width=10,color=ANGLE_COLORS[label]),
-            showlegend=False
+            x=wedge_x, y=wedge_y,
+            fill="toself", fillcolor=ANGLE_COLORS[label],
+            line=dict(color="black", width=1), showlegend=False
         ))
-        mid = np.radians(total_angle+span/2)
+
+        # Radial division lines
+        xs1 = center_x + radius * np.cos(start)
+        ys1 = center_y + radius * np.sin(start)
+        xe1 = center_x + radius * np.cos(end)
+        ye1 = center_y + radius * np.sin(end)
+        fig.add_trace(go.Scatter(x=[center_x, xs1], y=[center_y, ys1],
+                                 mode="lines", line=dict(color="black", width=2), showlegend=False))
+        fig.add_trace(go.Scatter(x=[center_x, xe1], y=[center_y, ye1],
+                                 mode="lines", line=dict(color="black", width=2), showlegend=False))
+
+        # Label just outside the wedge midpoint
+        mid = (start + end) / 2.0
         fig.add_annotation(
-            x=center_x+0.45*np.cos(mid),
-            y=center_y+0.45*np.sin(mid),
+            x=center_x + 0.48 * np.cos(mid),
+            y=center_y + 0.48 * np.sin(mid),
             text=f"{label} ({span:.1f}°)",
             showarrow=False,
-            font=dict(size=16,color=ANGLE_COLORS[label].replace("0.6","1"))
+            font=dict(size=16, color=ANGLE_COLORS[label].replace("0.6", "1"))
         )
-        total_angle += span
 
-    # equations on right
+        running_angle_deg += span
+
+
+        # equations on right
     text_x = eq_text_x
     text_y = np.mean(y)
-    eq_text=(
-        "A + B + C = 360<br>"
-        "A + a = 180<br>"
-        "B + b = 180<br>"
-        "C + c = 180<br><br>"
-        "⇒ A + B + C + a + b + c = 180 + 180 + 180<br>"
-        "⇒ a + b + c = 180"
+    eq_text = (
+        "Adding eq. (1), (2) and (3) ⇒ A + B + C + a + b + c = 180 + 180 + 180<br>"
+        "simplifying with eq (4) ⇒ a + b + c = 180"
     )
-    fig.add_annotation(x=text_x, y=text_y, text=eq_text,
-                       showarrow=False, font=dict(size=14), align="left")
+    fig.add_annotation(
+        x=text_x, y=text_y,
+        text=eq_text,
+        showarrow=False, font=dict(size=14), align="left"
+    )
+
+    # --- Equations under the triangle ---
+    # Compute bottom of triangle
+    ymin_tri = np.min(y)
+    # Offset below triangle
+    offset = 0.3
+    eq_x = np.mean(x)  # center under triangle
+    eq_y = ymin_tri - offset
+
+    eq_text = (
+        "(1) A + a = 180<br>"
+        "(2) B + b = 180<br>"
+        "(3) C + c = 180"
+    )
+    fig.add_annotation(
+        x=eq_x,
+        y=eq_y,
+        text=eq_text,
+        showarrow=False,
+        font=dict(size=16, color="black"),
+        xanchor="center",
+        align="center"
+    )
+
+    # Dynamic sum label below the circle
+    # We compute the bottom of the circle dynamically using radius
+    circle_bottom = center_y - radius  # circle center minus radius
+    offset = 0.3
+
+    fig.add_annotation(
+        x=center_x,
+        y=circle_bottom - offset,
+        text="(4) A + B + C = 360°<br>" \
+        "Imagine walking around the triangle.<br>" \
+        "When reaching where you started,<br>" \
+        "you have turned 360°",
+        showarrow=False,
+        font=dict(size=18, color="black"),
+        xanchor="center"
+    )
+
     return fig
 
 
