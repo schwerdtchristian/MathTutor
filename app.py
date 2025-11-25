@@ -20,23 +20,28 @@ app.layout = html.Div([
     # ---------- LINKS + IMAGE SIDE BY SIDE ----------
     html.Div([
 
-        # --- Left: page links ---
+        # --- Left: page links WITH SCROLLBAR ---
         html.Div(
             id="page-links-container",
             style={
                 "width": "300px",
-                "marginRight": "40px"
+                "marginRight": "40px",
+                "height": "220px",         # <<< NEW — slightly shorter list area
+                "overflowY": "scroll",     # <<< NEW — forces vertical scrollbar
+                "border": "1px solid #ccc",
+                "padding": "10px"
             }
         ),
 
-        # --- Left: image ---
+        # --- Left image ---
         html.Div([
             html.Img(
                 src="/assets/Math_tutor_app_3.png",
                 style={'width': '500px'}
             )
         ]),
-        # --- Right: image ---
+
+        # --- Right image ---
         html.Div([
             html.Img(
                 src="/assets/Math_tutor_app_3_flipped.png",
