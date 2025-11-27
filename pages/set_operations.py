@@ -140,6 +140,8 @@ layout = html.Div([
                 html.Button("A - B", id="btn-A-minus-B", n_clicks=0,
                             style={"width": "150px", "marginBottom": "8px"}),
                 html.Button("B - A", id="btn-B-minus-A", n_clicks=0,
+                            style={"width": "150px", "marginBottom": "8px"}),
+                html.Button("A Δ B", id="btn-A-delta-B", n_clicks=0,
                             style={"width": "150px"})
             ], style={"display": "flex", "flexDirection": "column", "marginTop": "12px"})
         ], style={"marginRight": "80px", "minWidth": "200px"}),
@@ -235,8 +237,9 @@ def update_text(a_values, b_values):
     Input("btn-B-only", "n_clicks"),
     Input("btn-A-minus-B", "n_clicks"),
     Input("btn-B-minus-A", "n_clicks"),
+    Input("btn-A-delta-B", "n_clicks")
 )
-def update_highlight(n_union, n_intersect, n_Aonly, n_Bonly, n_AminusB, n_BminusA):
+def update_highlight(n_union, n_intersect, n_Aonly, n_Bonly, n_AminusB, n_BminusA, n_AdeltaB):
     ctx = dash.callback_context
     # default: all invisible
     fillA = NEUTRAL
@@ -289,6 +292,13 @@ def update_highlight(n_union, n_intersect, n_Aonly, n_Bonly, n_AminusB, n_Bminus
         fillB = HIGHLIGHT
         fillAB = HIGHLIGHT
         opaB = opaAB =  "1.0"
+        return fillA, fillB, fillAB, opaA, opaB, opaAB
+    
+    if btn == "btn-A-delta-B":
+        # A delta B (A and B but not intersection)
+        fillB = HIGHLIGHT
+        fillA = HIGHLIGHT
+        opaB = opaA =  "1.0"
         return fillA, fillB, fillAB, opaA, opaB, opaAB
 
     return fillA, fillB, fillAB, opaA, opaB, opaAB
