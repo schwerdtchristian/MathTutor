@@ -7,11 +7,42 @@ dash.register_page(module = __name__, name = "Area and primitive function")
 layout = html.Div([
      html.H4('Area and primitive function', style={"font-size": "30px", "text-align": "center"}), 
      html.P("Explore how the primitive function can be intepreted as the area of its derivative function. By clicking on the button to add area the primitive function is increasing its value while the area under the curve for the derivative function increases and vice versa when the button for decreasing the area is clicked. Ecpecially note that to keep the area constant means that the primitive function needs to horizontal, meaning that its derivative is zero hence its derivative function graph is zero", style={"text-align": "center"}),
-     dcc.Graph(id="primitive_function"),
-     dcc.Graph(id="derivative_function"), 
-     html.Button("Decrease area", n_clicks=0, id='btn-decArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
-     html.Button("Same area", n_clicks=0, id='btn-sameArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
-     html.Button("Increase area", n_clicks=0, id='btn-incArea', style={'font-size': '18px', 'width': '140px', 'height':'50px'}), 
+     html.Div([
+
+        # LEFT COLUMN — BUTTONS STACKED VERTICALLY
+        html.Div([
+            html.Button("Increase area", n_clicks=0, id='btn-incArea',
+                        style={'font-size': '18px', 'width': '140px', 'height':'50px', 'marginBottom': '10px'}),
+
+            html.Button("Same area", n_clicks=0, id='btn-sameArea',
+                        style={'font-size': '18px', 'width': '140px', 'height':'50px', 'marginBottom': '10px'}),
+
+            html.Button("Decrease area", n_clicks=0, id='btn-decArea',
+                        style={'font-size': '18px', 'width': '140px', 'height':'50px'})
+        ],
+        style={
+            "display": "flex",
+            "flexDirection": "column",
+            "marginRight": "30px"  # space between buttons and graphs
+        }),
+
+        # RIGHT COLUMN — THE TWO GRAPHS STACKED VERTICALLY
+        html.Div([
+            dcc.Graph(id="derivative_function", style={"height": "300px"}),
+            dcc.Graph(id="primitive_function", style={"height": "300px"}),
+        ],
+        style={
+            "display": "flex",
+            "flexDirection": "column",
+            "width": "100%",     # optional: keep graphs bigger
+        })
+
+    ],
+    style={
+        "display": "flex",
+        "flexDirection": "row",    # buttons LEFT, graphs RIGHT (side by side)
+        "alignItems": "center"
+    }), 
      html.P(id = "area_calculation_primitive_function"), 
      dcc.Store(id = "prev_y_prim"),
      html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
@@ -31,7 +62,7 @@ def draw_primitive_function(data, n_decArea, n_sameArea, n_incArea):
         x_axis_length = len(data) + 1
     fig = go.Figure(go.Scatter(
         x = x, y=y,
-    ), layout = {"title": "primitive function - area function", "title_x" : 0.5})
+    ), layout = {"title": "Primitive function of below function", "title_x" : 0.5, "yaxis_title" : "Area under function above"})
     fig.update_xaxes(range=[0, x_axis_length])
 
     return fig, y
@@ -58,7 +89,7 @@ def draw_derivative_function(data):
     fig = go.Figure(go.Scatter(
         x = x, y = y,
         fill = "tozeroy",
-    ), layout = {"title": "derivative function", "title_x" : 0.5})
+    ), layout = {"title": "Area under curve", "title_x" : 0.5})
     fig.update_xaxes(range=[0, x_axis_length])
 
     return fig
