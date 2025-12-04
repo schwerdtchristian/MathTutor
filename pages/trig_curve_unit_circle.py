@@ -9,10 +9,18 @@ layout = html.Div([
     html.H4('Sinus curve vs. unit circle visualization', style={"font-size": "30px", "text-align": "center"}),
     html.P("Explore how the graph of the sinus function is connected with the unit circle by changing the angle (v) measured in radians. Explore how the y value on the y axis is alternating between -1 and 1 in both the sinus function graph and unity circle when increasing the angle (v)", style={"text-align": "center"}),
     dcc.Graph(id="sin_curve_unity"),
-    dcc.Graph(id="unity_circle"),
-    html.P("Angle (v)"),
-    html.Button("-", n_clicks=0, id='btn-dec', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
-    html.Button("+", n_clicks=0, id='btn-inc', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
+    html.Div([
+        dcc.Graph(id="unity_circle"),
+        html.Div([
+            html.P("Angle (v)"),
+            html.Button("-", n_clicks=0, id='btn-dec', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
+            html.Button("+", n_clicks=0, id='btn-inc', style={'font-size': '18px', 'width': '140px', 'height':'30px'}),
+        ])
+    ], 
+    style={
+        "display":"flex",
+        "flexDirection":"row"}
+    ),
     html.P("Created by Christian Schwerdt", style={"font-style": "italic", "text-align": "right"}),
     ])
 

@@ -129,7 +129,94 @@ def make_grid(rows, cols, size, grid_id):
     )
 
 
-# Callback --------------------------------------------------------------------
+# New helper for bracket + grid wrapper ---------------------------------------
+def wrap_with_brackets(grid, rows, cols, size):
+    grid_pixel_width  = cols * size + (cols - 1) * 8
+    grid_pixel_height = rows * size + (rows - 1) * 8
+
+    return html.Div(
+        style={"display": "flex", "flexDirection": "column", "alignItems": "center"},
+        children=[
+            # --- Top width bracket ---
+            html.Div(
+                style={
+                    "display": "flex",
+                    "alignItems": "center",
+                    "marginBottom": "6px"
+                },
+                children=[
+                    html.Div("⟦", style={"fontSize": "22px"}),  # left part of bracket
+                    html.Div(
+                        style={
+                            "height": "0px",
+                            "width": f"{grid_pixel_width}px",
+                            "borderTop": "3px solid black",
+                            "position": "relative"
+                        },
+                        children=[
+                            html.Div(
+                                str(cols),
+                                style={
+                                    "position": "absolute",
+                                    "top": "-25px",
+                                    "left": "50%",
+                                    "transform": "translateX(-50%)",
+                                    "fontSize": "20px",
+                                    "fontWeight": "bold"
+                                }
+                            )
+                        ]
+                    ),
+                    html.Div("⟧", style={"fontSize": "22px"})   # right part of bracket
+                ]
+            ),
+
+            # --- Grid with left height bracket ---
+            html.Div(
+                style={"display": "flex", "alignItems": "center", "gap": "10px"},
+                children=[
+                    # Left height bracket
+                    html.Div(
+                        style={
+                            "display": "flex",
+                            "flexDirection": "column",
+                            "alignItems": "center"
+                        },
+                        children=[
+                            html.Div("⟦", style={"fontSize": "22px"}),  # Top cap
+                            html.Div(
+                                style={
+                                    "width": "0px",
+                                    "height": f"{grid_pixel_height}px",
+                                    "borderLeft": "3px solid black",
+                                    "position": "relative"
+                                },
+                                children=[
+                                    html.Div(
+                                        str(rows),
+                                        style={
+                                            "position": "absolute",
+                                            "left": "-40px",
+                                            "top": "50%",
+                                            "transform": "translateY(-50%)",
+                                            "fontSize": "20px",
+                                            "fontWeight": "bold"
+                                        }
+                                    )
+                                ]
+                            ),
+                            html.Div("⟧", style={"fontSize": "22px"})  # Bottom cap
+                        ]
+                    ),
+
+                    grid  # ← original grid stays unchanged
+                ]
+            )
+        ]
+    )
+
+# -----------------------------------------------------------------------------
+
 
 @callback(
     Output("top-grid-row", "children"),
@@ -143,7 +230,7 @@ def update_grids(rows, cols):
     if not rows or not cols or rows <= 0 or cols <= 0:
         return [], [], ""
 
-    # Compute a reasonable square size
+    # Compute dynamic square size
     available_width = 0.8 * 1000
     available_height = 0.8 * 800
 
@@ -151,21 +238,14 @@ def update_grids(rows, cols):
     size_by_height = available_height / rows
     square_size = max(5, min(size_by_width, size_by_height, 50))
 
-    # Create grids
-    top_grid = make_grid(rows, cols, square_size, "top-grid")
-    bottom_grid = make_grid(cols, rows, square_size, "bottom-grid")
+    # grids
+    top_grid_raw    = make_grid(rows, cols, square_size, "top-grid")
+    bottom_grid_raw = make_grid(cols, rows, square_size, "bottom-grid")
 
-    # Labels
-    top_label = html.Div(
-        f"{rows} × {cols}",
-        style={"fontSize": "22px", "fontWeight": "bold"}
-    )
-
-    bottom_label = html.Div(
-        f"{cols} × {rows}",
-        style={"fontSize": "22px", "fontWeight": "bold"}
-    )
+    # wrap with brackets
+    top_wrapped    = wrap_with_brackets(top_grid_raw, rows, cols, square_size)
+    bottom_wrapped = wrap_with_brackets(bottom_grid_raw, cols, rows, square_size)
 
     equality = f"{cols} × {rows} = {rows} × {cols}"
 
-    return [top_grid, top_label], [bottom_grid, bottom_label], equality
+    return [top_wrapped], [bottom_wrapped], equality

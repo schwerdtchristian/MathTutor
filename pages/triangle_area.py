@@ -7,11 +7,17 @@ layout = html.Div([
     html.H4('Triangle area formula', style={"font-size": "30px", "text-align": "center"}),
     html.P("Explore the triangle area formula and see why the area formula stays the same regardless of the shape of the triangle. The triangle area is calculated by creating two sub triangles which areas are added or subtracted depending on the shape of the original triangle, but the triangle area formula stays the same.", style={"text-align": "center"}),
     dcc.Graph(id="triangle"),
-    html.Div(children = [
-        dcc.Graph(id="sub_triangle1", style = {"display" : "inline-block"}),
-        dcc.Graph(id="sub_triangle2", style = {"display" : "inline-block"}),
-    ]),
-    html.P(id = "area_calculations"),
+    html.Div([
+    dcc.Graph(id="sub_triangle1"),
+    dcc.Graph(id="sub_triangle2")
+    ], style={
+        "display": "flex",
+        "flex-direction": "row",
+        "justify-content": "center",
+        "gap": "30px"  # optional spacing between plots
+    }),
+
+    dcc.Markdown(id="area_calculations", mathjax=True, style={"font-size": "20px", "text-align": "center"}),
     html.B("Area = b * h / 2"),
     html.Div([
         html.Button("Move A left", n_clicks=0, id='btn-left', style={'font-size': '18px', 'width': '140px', 'height':'50px', 'margin-top': '20px'}),
@@ -91,14 +97,15 @@ def draw_sub_triangle2(n_left, n_right):
 @callback(Output("area_calculations", "children"), Input("btn-left", "n_clicks"), Input("btn-right", "n_clicks"))
 def area_formula(n_left, n_right):
     n = 0.5*(n_right - n_left)
-    if n > -1 and n < 1:
-        return "Triangle area = Triangle 1 area + Triangle 2 area = (b1 * h) / 2 + (b2 * h) / 2 = (b1 + b2) * h / 2 = (b * h ) / 2 "
-    elif n == -1:
-        return "Triangle area = Triangel 2 area = (b2 * h ) / 2 = (b * h) / 2"
-    elif n == 1:
-        return "Triangle area = Triangle 1 area = (b1 * h) / 2 = (b * h) / 2 "
-    elif n < -1:
-        return "Triangle area = Triangle 2 area - Triangle 1 area = (b2 * h) / 2 - (b1 * h) / 2 = (b2 - b1) * h / 2 = (b * h) / 2"
-    elif n > 1:
-        return "Triangle area = Triangle 1 area - Triangle 2 area = (b1 * h) / 2 - (b2 * h) / 2 = (b1 - b2) * h / 2 = (b * h) / 2"
     
+    if -1 < n < 1:
+        return r"$$A = A_1 + A_2 = \frac{b_1h}{2} + \frac{b_2h}{2} = \frac{(b_1+b_2)h}{2} = \frac{bh}{2}$$"
+    elif n == -1:
+        return r"$$A = A_2 = \frac{b_2h}{2} = \frac{bh}{2}$$"
+    elif n == 1:
+        return r"$$A = A_1 = \frac{b_1h}{2} = \frac{bh}{2}$$"
+    elif n < -1:
+        return r"$$A = A_2 - A_1 = \frac{b_2h}{2} - \frac{b_1h}{2} = \frac{(b_2-b_1)h}{2} = \frac{bh}{2}$$"
+    elif n > 1:
+        return r"$$A = A_1 - A_2 = \frac{b_1h}{2} - \frac{b_2h}{2} = \frac{(b_1-b_2)h}{2} = \frac{bh}{2}$$"
+ 

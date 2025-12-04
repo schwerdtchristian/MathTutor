@@ -6,7 +6,7 @@ import numpy as np
 dash.register_page(module = __name__, name = "Area and primitive function")
 layout = html.Div([
      html.H4('Area and primitive function', style={"font-size": "30px", "text-align": "center"}), 
-     html.P("Explore how the primitive function can be intepreted as the area of its derivative function. By clicking on the button to add area the primitive function is increasing its value while the area under the curve for the derivative function increases and vice versa when the button for decreasing the area is clicked. Ecpecially note that to keep the area constant means that the primitive function needs to horizontal, meaning that its derivative is zero hence its derivative function graph is zero", style={"text-align": "center"}),
+     html.P("Explore how the area under a function can be determined by the value of its primitive function. By using the buttons the area under Function A can be increased, decreased or stay the same. Notice how the value of the primitive to function A reflects this, ecpecially notice that if the area under Function A stays the same the primitive of Function A is horizontal hence its derivitive (meaning Function A) is zero", style={"text-align": "center"}),
      html.Div([
 
         # LEFT COLUMN — BUTTONS STACKED VERTICALLY
@@ -62,7 +62,7 @@ def draw_primitive_function(data, n_decArea, n_sameArea, n_incArea):
         x_axis_length = len(data) + 1
     fig = go.Figure(go.Scatter(
         x = x, y=y,
-    ), layout = {"title": "Primitive function of below function", "title_x" : 0.5, "yaxis_title" : "Area under function above"})
+    ), layout = {"title": "Primitive of function A", "title_x" : 0.5, "yaxis_title" : "Area of function A"})
     fig.update_xaxes(range=[0, x_axis_length])
 
     return fig, y
@@ -89,7 +89,7 @@ def draw_derivative_function(data):
     fig = go.Figure(go.Scatter(
         x = x, y = y,
         fill = "tozeroy",
-    ), layout = {"title": "Area under curve", "title_x" : 0.5})
+    ), layout = {"title": "Function A", "title_x" : 0.5})
     fig.update_xaxes(range=[0, x_axis_length])
 
     return fig
